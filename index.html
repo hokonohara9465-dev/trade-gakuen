@@ -448,25 +448,26 @@ window.addEventListener('scroll',()=>{
   sticky.classList.toggle('show',past&&!(et<window.innerHeight&&et>-enroll.offsetHeight));
 },{passive:true});
 
-// ========== 表彰台：管理画面の画像をlocalStorageから読み込み ==========
+// ========== 表彰台：Cloudflare KVから画像を読み込み ==========
 (function(){
-  try{
-    const raw=localStorage.getItem('tg_results');
-    if(!raw)return;
-    const imgs=JSON.parse(raw);
-    imgs.forEach((src,i)=>{
-      if(!src)return;
-      const slot=document.getElementById('result-'+i);
-      if(!slot)return;
-      const img=document.createElement('img');
-      img.src=src;
-      img.alt='成績報告'+(i+1);
-      img.onload=()=>img.classList.add('loaded');
-      slot.appendChild(img);
-      const inner=slot.querySelector('.shot-inner');
-      if(inner)inner.style.display='none';
-    });
-  }catch(e){}
+  const WORKER='https://trade-gakuen-discord.hokonohara9465.workers.dev';
+  fetch(WORKER+'/results')
+    .then(r=>r.json())
+    .then(imgs=>{
+      imgs.forEach((src,i)=>{
+        if(!src)return;
+        const slot=document.getElementById('result-'+i);
+        if(!slot)return;
+        const img=document.createElement('img');
+        img.src=src;
+        img.alt='成績報告'+(i+1);
+        img.onload=()=>img.classList.add('loaded');
+        slot.appendChild(img);
+        const inner=slot.querySelector('.shot-inner');
+        if(inner)inner.style.display='none';
+      });
+    })
+    .catch(()=>{});
 })();
 
 // ========== Discord リアルタイム反映 ==========
