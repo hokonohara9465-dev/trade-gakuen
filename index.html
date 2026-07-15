@@ -87,7 +87,7 @@ h1,h2,h3{font-family:"Zen Kaku Gothic New",sans-serif;line-height:1.4}
 
 /* Discord live feed */
 .support-note{text-align:center;color:var(--muted);font-size:.9rem;margin:-20px auto 32px;max-width:34em}
-.dc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.dc-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:600px;margin:0 auto}
 .dc-window{background:#313338;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #232428}
 .dc-bar{display:flex;align-items:center;gap:8px;background:#232428;padding:10px 14px;color:#c7ccd1;font-size:.82rem}
 .dc-bar .hash{color:#8b929c;font-weight:700}
@@ -319,26 +319,16 @@ footer .copy{margin-top:22px;opacity:.7}
     </div>
     <p class="support-note reveal">学園内のリアルタイムのやり取りをそのままお届けしています。</p>
 
-    <div class="dc-grid">
-      <div class="dc-window reveal">
-        <div class="dc-bar">
-          <span class="dot" id="dot-chat"></span>
-          <span class="hash">#</span>雑談・質問
-        </div>
-        <div class="dc-body" id="feed-chat">
-          <div class="dc-status">読み込み中…</div>
-        </div>
-        <div class="dc-note">※ Discord内の実際のやり取りです</div>
-      </div>
+    <div class="dc-grid" style="grid-template-columns:1fr">
       <div class="dc-window reveal">
         <div class="dc-bar">
           <span class="dot" id="dot-study"></span>
-          <span class="hash">#</span>ドル円-勉強部屋
+          <span class="hash">#</span>トレード記録
         </div>
         <div class="dc-body" id="feed-study">
           <div class="dc-status">読み込み中…</div>
         </div>
-        <div class="dc-note">※ Discord内の実際のやり取りです</div>
+        <div class="dc-note">※ Discord内の実際のトレード記録です</div>
       </div>
     </div>
   </div>
@@ -484,10 +474,9 @@ window.addEventListener('scroll',()=>{
 const WORKER_BASE = 'https://trade-gakuen-discord.hokonohara9465.workers.dev';
 
 const CHANNELS={
-  'feed-chat':'1338385694023876608',    // ▼ 雑談・質問のChannel ID
-  'feed-study':'1336371269913940069'   // ▼ ドル円-勉強部屋のChannel ID
+  'feed-study':'1338385748625457163'   // トレード記録部屋
 };
-const DOT_IDS={'feed-chat':'dot-chat','feed-study':'dot-study'};
+const DOT_IDS={'feed-study':'dot-study'};
 
 function avatarColor(id){
   const colors=['#5865f2','#3ba55d','#faa61a','#ed4245','#9c84ec','#eb459e'];
